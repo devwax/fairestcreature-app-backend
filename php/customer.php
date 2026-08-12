@@ -12,7 +12,7 @@ $token = fc_config('SHOPIFY_ADMIN_TOKEN');
 $apiVersion = fc_config('SHOPIFY_API_VERSION', '2024-10');
 
 if (!$shop || !$token || strpos($token, 'xxx') !== false) {
-	fc_json(array('status' => false, 'data' => 'Missing SHOPIFY_SHOP / SHOPIFY_ADMIN_TOKEN in staging-bridge/.env'));
+	fc_json(array('status' => false, 'data' => 'Missing SHOPIFY_SHOP / SHOPIFY_ADMIN_TOKEN in fairestcreature-app-backend/.env'));
 }
 
 $data = fc_parse_body();

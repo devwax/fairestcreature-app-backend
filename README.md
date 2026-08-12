@@ -1,9 +1,12 @@
-# Fairest Creature — staging allocation bridge
+# fairestcreature-app-backend
 
 Thin **Node** service that creates/completes Shopify customers for the Request Allocation form. No database, no React, no Prisma.
 
+GitHub: `fairestcreature-app-backend`  
+Deploy: Vercel (+ Shopify App Proxy)
+
 - **Local:** `npm start` → `http://127.0.0.1:8787`
-- **Production (staging store):** Vercel + Shopify **App Proxy** → theme posts to `/apps/fc-bridge/customer.php`
+- **Staging storefront:** App Proxy → theme posts to `/apps/fc-bridge/customer.php`
 
 Uses [client credentials](https://shopify.dev/docs/apps/build/authentication-authorization/access-tokens/client-credentials-grant) against the Dev Dashboard app installed on the staging shop.
 
@@ -29,25 +32,10 @@ curl http://127.0.0.1:8787/health
 
 Leave `REQUIRE_APP_PROXY=false` locally so the theme can hit `127.0.0.1` without a proxy signature.
 
-## Deploy to Vercel (separate GitHub repo)
+## Deploy to Vercel
 
-This folder is meant to be its **own** GitHub repository (not the theme monorepo).
-
-1. Create an empty GitHub repo (e.g. `fairestcreature-staging-bridge-api`).
-2. From this directory:
-
-```bash
-cd staging-bridge
-git init
-git add .
-git commit -m "Initial staging allocation bridge for Vercel + App Proxy"
-git branch -M main
-git remote add origin git@github.com:<org>/<repo>.git
-git push -u origin main
-```
-
-3. In Vercel: **Add New Project** → import that repo → root directory `.`
-4. Set environment variables:
+1. This repo is the Vercel project root.
+2. Set environment variables:
 
 | Name | Value |
 |---|---|
@@ -59,11 +47,11 @@ git push -u origin main
 | `SHOPIFY_API_VERSION` | `2024-10` |
 | `CORS_ORIGINS` | (optional when using App Proxy) |
 
-5. Deploy → copy the production URL, e.g. `https://fairestcreature-staging-bridge.vercel.app`
+3. Deploy → copy the production URL, e.g. `https://fairestcreature-app-backend.vercel.app`
 
 ## Shopify App Proxy
 
-Configured on the Partner / Dev Dashboard app (`fairestcreature-staging-bridge` in the monorepo’s `fairestcreature-staging-bridge/shopify.app.toml`):
+Configured on the Partner / Dev Dashboard app (`fairestcreature-staging-bridge` Shopify app project in the FairestCreature monorepo):
 
 ```toml
 [app_proxy]
@@ -72,15 +60,15 @@ subpath = "fc-bridge"
 prefix = "apps"
 ```
 
-Then `shopify app deploy` (from the Shopify app project) so the proxy is live.
+Then `shopify app deploy` from that app project so the proxy is live.
 
 Storefront calls become same-origin:
 
 `https://fairestcreature-staging-gt0n4x79.myshopify.com/apps/fc-bridge/customer.php`
 
-→ Shopify verifies/forwards → `https://YOUR-VERCEL-URL.vercel.app/customer.php`
+→ Shopify forwards → `https://YOUR-VERCEL-URL.vercel.app/customer.php`
 
-Theme base URL (staging): `/apps/fc-bridge` via `theme/snippets/fc-shopify-app-base.liquid`.
+Theme base URL (staging): `/apps/fc-bridge` via `theme/snippets/fc-shopify-app-base.liquid` (switch from `http://127.0.0.1:8787` when proxy is live).
 
 ## App requirements
 

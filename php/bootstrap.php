@@ -2,7 +2,7 @@
 
 /**
  * Shared config + CORS for staging PHP endpoints.
- * Loads ../../.env from staging-bridge root.
+ * Loads ../.env from fairestcreature-app-backend root.
  */
 
 function fc_load_env($path) {
