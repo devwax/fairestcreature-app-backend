@@ -2,8 +2,12 @@
 
 Thin **Node** service that creates/completes Shopify customers for the Request Allocation form. No database, no React, no Prisma.
 
-GitHub: `fairestcreature-app-backend`  
-Deploy: Vercel (+ Shopify App Proxy)
+| | |
+|---|---|
+| **GitHub** | https://github.com/devwax/fairestcreature-app-backend |
+| **Vercel project** | https://vercel.com/kurtz8763-4260s-projects/fairestcreature-app-backend |
+| **Production URL** | https://fairestcreature-app-backend.vercel.app |
+| **Health** | https://fairestcreature-app-backend.vercel.app/health |
 
 - **Local:** `npm start` → `http://127.0.0.1:8787`
 - **Staging storefront:** App Proxy → theme posts to `/apps/fc-bridge/customer.php`
@@ -34,8 +38,8 @@ Leave `REQUIRE_APP_PROXY=false` locally so the theme can hit `127.0.0.1` without
 
 ## Deploy to Vercel
 
-1. This repo is the Vercel project root.
-2. Set environment variables:
+1. This repo is the Vercel project root (linked above).
+2. Environment variables (Production + Preview):
 
 | Name | Value |
 |---|---|
@@ -44,31 +48,29 @@ Leave `REQUIRE_APP_PROXY=false` locally so the theme can hit `127.0.0.1` without
 | `SHOPIFY_CLIENT_SECRET` | from Dev Dashboard app |
 | `SHOPIFY_API_SECRET` | same as client secret (App Proxy HMAC) |
 | `REQUIRE_APP_PROXY` | `true` |
-| `SHOPIFY_API_VERSION` | `2024-10` |
+| `SHOPIFY_API_VERSION` | `2026-07` |
 | `CORS_ORIGINS` | (optional when using App Proxy) |
-
-3. Deploy → copy the production URL, e.g. `https://fairestcreature-app-backend.vercel.app`
 
 ## Shopify App Proxy
 
-Configured on the Partner / Dev Dashboard app (`fairestcreature-staging-bridge` Shopify app project in the FairestCreature monorepo):
+Configured in the FairestCreature monorepo (`fairestcreature-staging-bridge/shopify.app.toml`):
 
 ```toml
 [app_proxy]
-url = "https://YOUR-VERCEL-URL.vercel.app"
+url = "https://fairestcreature-app-backend.vercel.app"
 subpath = "fc-bridge"
 prefix = "apps"
 ```
 
-Then `shopify app deploy` from that app project so the proxy is live.
+Deploy app config with `shopify app deploy` from that project so the proxy is live on the shop.
 
-Storefront calls become same-origin:
+Storefront:
 
 `https://fairestcreature-staging-gt0n4x79.myshopify.com/apps/fc-bridge/customer.php`
 
-→ Shopify forwards → `https://YOUR-VERCEL-URL.vercel.app/customer.php`
+→ Shopify forwards → `https://fairestcreature-app-backend.vercel.app/customer.php`
 
-Theme base URL (staging): `/apps/fc-bridge` via `theme/snippets/fc-shopify-app-base.liquid` (switch from `http://127.0.0.1:8787` when proxy is live).
+Theme base URL (staging): `/apps/fc-bridge` via `theme/snippets/fc-shopify-app-base.liquid`.
 
 ## App requirements
 
