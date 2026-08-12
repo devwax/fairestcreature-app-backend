@@ -1,0 +1,15 @@
+{
+  "name": "fairestcreature-staging-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Thin Shopify Admin API bridge for Fairest Creature Request Allocation (App Proxy / Vercel)",
+  "type": "module",
+  "scripts": {
+    "start": "node local-server.mjs",
+    "dev": "node local-server.mjs",
+    "health": "curl -s http://127.0.0.1:8787/health | python3 -m json.tool"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

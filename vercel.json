@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    { "source": "/health", "destination": "/api/health" },
+    { "source": "/customer.php", "destination": "/api/customer.php" },
+    { "source": "/customer", "destination": "/api/customer" },
+    { "source": "/customer-account.php", "destination": "/api/customer-account.php" },
+    { "source": "/customer-account", "destination": "/api/customer-account" },
+    { "source": "/customer-update.php", "destination": "/api/customer-update.php" },
+    { "source": "/customer-update", "destination": "/api/customer-update" },
+    { "source": "/customer-change-password.php", "destination": "/api/customer-change-password.php" }
+  ]
+}
