@@ -1,8 +1,8 @@
 {
   "rewrites": [
     { "source": "/health", "destination": "/api/health" },
-    { "source": "/oauth/start", "destination": "/api/oauth/start" },
-    { "source": "/oauth/callback", "destination": "/api/oauth/callback" },
+    { "source": "/oauth/start", "destination": "/api/oauth-start" },
+    { "source": "/oauth/callback", "destination": "/api/oauth-callback" },
     { "source": "/customer.php", "destination": "/api/customer.php" },
     { "source": "/customer", "destination": "/api/customer" },
     { "source": "/customer-account.php", "destination": "/api/customer-account.php" },
